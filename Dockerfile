@@ -8,12 +8,14 @@ ARG GODOWNLOADFILE="go${GOVERSION}.linux-amd64.tar.gz"
 
 WORKDIR /root
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Tokyo
 # these environment are needed to run sam
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 
 RUN apt update && apt install -y --no-install-recommends \
-	apt-utils ca-certificates make vim less zip unzip curl python3 python3-distutils git jq \
+	tzdata apt-utils ca-certificates make vim less zip unzip curl python3 python3-distutils git jq \
 	&& apt clean && rm -rf /var/lib/apt/lists/* && \
 	curl -sS -kL https://bootstrap.pypa.io/get-pip.py | python3 && \
 	pip3 install awscli aws-sam-cli --upgrade && \
